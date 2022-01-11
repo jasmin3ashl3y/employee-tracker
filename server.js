@@ -14,7 +14,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-// Connects to database + .env for password privacy
+// connects to database, .env for password privacy
 const connection = mysql.createConnection(
     {
         host: "localhost",
@@ -37,7 +37,7 @@ connection.connect(function (err) {
     init();
 });
 
-// Init fx
+// initialize connection
 function init(connection) {
     inquirer.prompt([{
     // Options to begin program

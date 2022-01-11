@@ -1,3 +1,5 @@
+
+
 function viewDepts() {
     // show dept names + Ids
     let query = "SELECT * FROM department";
@@ -5,7 +7,6 @@ function viewDepts() {
         if (err) {
             console.log(err)
         };
-        // Initializes main prompt function
         init();
     })
 };
@@ -31,3 +32,7 @@ function viewEmployees() {
         init();
     })
 };
+
+module.exports = viewDepts
+module.exports = viewRoles
+module.exports = viewEmployees

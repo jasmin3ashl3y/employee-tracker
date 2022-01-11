@@ -1,3 +1,4 @@
+const inquirer = require('inquirer')
 
 function updateEmployee() {
     // enter new employee role, then add to db

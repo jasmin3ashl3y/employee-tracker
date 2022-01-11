@@ -1,3 +1,5 @@
+const inquirer = require('inquirer')
+
 function addDept() {
     // enter department name, add to db
     inquirer.prompt({
