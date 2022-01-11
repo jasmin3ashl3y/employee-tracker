@@ -1,0 +1,25 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001bserver.js)",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasmin3ashl3y/employee-tracker.git"
+  },
+  "author": "jasmin3ashl3y",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jasmin3ashl3y/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/jasmin3ashl3y/employee-tracker#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "inquirer": "^8.2.0",
+    "mysql": "^2.18.1"
+  }
+}
