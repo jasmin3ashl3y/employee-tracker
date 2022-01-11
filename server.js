@@ -35,7 +35,6 @@ connection.connect(function (err) {
         console.log("unable to connect")
     };
     console.log('Connected to Employee Database');
-    // Initializes main prompt fx to begin application
     init();
 });
 
@@ -92,8 +91,6 @@ function viewDepts() {
         if (err) {
             console.log(err)
         };
-        // Using Print-Console-Table npm package to view results
-        printTable(res);
         // Initializes main prompt function
         init();
     })
@@ -106,9 +103,6 @@ function viewRoles() {
         if (err) {
             console.log(err)
         };
-        // Using Print-Console-Table npm package to view results
-        printTable(res);
-        // Initializes main prompt function
         init();
     })
 };
@@ -120,9 +114,6 @@ function viewEmployees() {
         if (err) {
             console.log(err)
         };
-        // Using Print-Console-Table npm package to view results
-        printTable(res);
-        // Initializes main prompt function
         init();
     })
 };
