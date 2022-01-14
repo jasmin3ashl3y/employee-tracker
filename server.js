@@ -1,83 +1,102 @@
-const express = require('express');
-const inquirer = require('inquirer');
-const mysql = require('mysql2');
-require('dotenv').config();
+const { prompt } = require("inquirer");
+const logo = require("asciiart-logo");
+const actionHandler = require('./handlers')
+require("./db/connection");
+require("console.table");
 
-const app = express();
+init();
 
-// Create Port
-const PORT = process.env.PORT || 3306;
+// Display logo text, load main prompts
+function init() {
+    const logoText = logo({ name: "Employee Tracker" }).render();
 
-// Parse incoming JSON data
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
+    console.log(logoText);
 
-// connects to database, .env for password privacy
-const connection = mysql.createConnection(
-    {
-        host: "localhost",
-        user: "root",
-        password: process.env.DB_PASS,
-        port: PORT,
-        database: "employees",
-        connectTimeout: 300000
-    },
-    console.log("Connected to Employee Tracker")
-);
+    loadMainPrompts();
+}
 
+async function loadMainPrompts() {
+    const { choice } = await prompt([
+        {
+            type: "list",
+            name: "choice",
+            message: "What would you like to do?",
+            choices: [
+                {
+                    name: "View All Employees",
+                    value: "VIEW_EMPLOYEES",
+                },
+                {
+                    name: "View All Employees By Department",
+                    value: "VIEW_EMPLOYEES_BY_DEPARTMENT",
+                },
+                
+                {
+                    name: "Add Employee",
+                    value: "ADD_EMPLOYEE",
+                },
+                {
+                    name: "View All Roles",
+                    value: "VIEW_ROLES",
+                },
+                {
+                    name: "Add Role",
+                    value: "ADD_ROLE",
+                },
+                
+                {
+                    name: "View All Departments",
+                    value: "VIEW_DEPARTMENTS",
+                },
+                {
+                    name: "Add Department",
+                    value: "ADD_DEPARTMENT",
+                },
+                
+                {
+                    name: "Quit",
+                    value: "QUIT",
+                },
+            ],
+        },
+    ]);
 
-// Check for connection errors
-connection.connect(function (err) {
-    if (err) {
-        console.log("unable to connect")
-    };
-    console.log('Connected to Employee Database');
-    init();
-});
+    // Call the appropriate function depending on what the user chose
+    switch (choice) {
+        case "VIEW_EMPLOYEES":
+            return viewEmployees();
+        case "VIEW_EMPLOYEES_BY_DEPARTMENT":
+            return viewEmployeesByDepartment();
+        case "ADD_EMPLOYEE":
+            return addEmployee();
+        case "UPDATE_EMPLOYEE_ROLE":
+            return updateEmployeeRole();
+        case "VIEW_DEPARTMENTS":
+            return viewDepartments();
+        case "ADD_DEPARTMENT":
+            return addDepartment();
+        case "VIEW_ROLES":
+            return viewRoles();
+        case "ADD_ROLE":
+            return addRole();
+        default:
+            return quit();
+    }
+}
 
-// initialize connection
-function init(connection) {
-    inquirer.prompt([{
-    // Options to begin program
-        type: 'list',
-        name: 'options',
-        message: 'What would you like to do?',
-        choices : [
-            'View all departments', 
-            'View all roles', 
-            'View all employees', 
-            'Add a department', 
-            'Add a role', 
-            'Add employee',
-            'Update employee role',
-        ]}
-    ]).then(function (userInput) {
-        switch(userInput.options) {
-            // Calls viewDept function
-            case ('View all departments'): viewDepts();
-            break;
-            // Calls viewRoles function
-            case ('View all roles'): viewRoles();
-            break;
-            // Calls viewEmployees function
-            case ('View all employees'): viewEmployees();
-            break;
-            // Calls addDept function
-            case ('Add a department'): addDept();
-            break;
-            // Calls addRole function
-            case ('Add a role'): addRole();
-            break;
-            // Calls addEmployee function
-            case ("Add employee"): addEmployee();
-            break;
-            // Calls updateEmployee function
-            case ('Update employee role'): updateEmployee();
-            break;
+function main() {
+    actionHandler(action)
+    .then(message => {
+        if (message) {
+            console.log(message)
         }
     })
-    
-};
+    .then(main)
+}
 
+main()
+
+function quit() {
+    console.log("Goodbye!");
+    process.exit();
+}

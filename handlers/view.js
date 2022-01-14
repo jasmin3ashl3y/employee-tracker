@@ -1,38 +1,60 @@
+const { prompt } = require("inquirer");
+const db = require("../db/connection");
+
+async function viewEmployees() {
+    const employees = await db.findAllEmployees();
+
+    console.log("\n");
+    console.table(employees);
+
+    loadMainPrompts();
+}
+
+async function viewEmployeesByDepartment() {
+    const departments = await db.findAllDepartments();
+
+    const departmentChoices = departments.map(({ id, name }) => ({
+        name: name,
+        value: id
+    }));
+
+    const { departmentId } = await prompt([
+        {
+            type: "list",
+            name: "departmentId",
+            message: "Which department would you like to see employees for?",
+            choices: departmentChoices,
+        },
+    ]);
+
+    const employees = await db.findAllEmployeesByDepartment(departmentId);
+
+    console.log("\n");
+    console.table(employees);
+
+    loadMainPrompts();
+}
+
+async function viewRoles() {
+    const roles = await db.findAllRoles();
+
+    console.log("\n");
+    console.table(roles);
+
+    loadMainPrompts();
+}
 
 
-function viewDepts() {
-    // show dept names + Ids
-    let query = "SELECT * FROM department";
-    connection.query(query, function (err, res) {
-        if (err) {
-            console.log(err)
-        };
-        init();
-    })
-};
+async function viewDepts() {
+    const departments = await db.findAllDepts();
 
-function viewRoles() {
-    // show job title, role id, department, salary
-    let query = "SELECT * FROM role";
-    connection.query(query, function (err, res) {
-        if (err) {
-            console.log(err)
-        };
-        init();
-    })
-};
+    console.log("\n");
+    console.table(departments);
 
-function viewEmployees() {
-    // show employee id, first name, last name, job title, department, salary, managers
-    let query = "SELECT * FROM employee";
-    connection.query(query, (err, res) => {
-        if (err) {
-            console.log(err)
-        };
-        init();
-    })
-};
+    loadMainPrompts();
+}
 
 module.exports = viewDepts
 module.exports = viewRoles
 module.exports = viewEmployees
+module.exports = viewEmployeesByDepartment

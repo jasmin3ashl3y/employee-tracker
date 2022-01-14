@@ -2,7 +2,7 @@
   "name": "employee-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001bserver.js)",
+  "main": "server.js",
   "scripts": {
     "test": "test"
   },
@@ -17,10 +17,14 @@
   },
   "homepage": "https://github.com/jasmin3ashl3y/employee-tracker#readme",
   "dependencies": {
+    "asciiart-logo": "^0.2.6",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "inquirer": "^8.2.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "console.table": "^0.10.0"
   }
 }

@@ -14,5 +14,4 @@ const actionHandler = ({ action }) => {
     }
 }
 
-
 module.exports = actionHandler
